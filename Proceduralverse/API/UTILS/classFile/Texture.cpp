@@ -1,7 +1,5 @@
-#include <Texture.h>
-#include <iostream>
-#include <GLEW/Include/GL/glew.h>
-#include <STB_IMAGE/Include/stb_image.h>
+#include "UTILS/include/Texture.h"
+
 
 
 Texture::Texture(const char* fileName)

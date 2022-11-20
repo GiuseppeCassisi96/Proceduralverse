@@ -1,12 +1,11 @@
 #pragma once
 #include <sstream>
 #include <string>
-#include <GLM/include/glm.hpp>
 #include <iostream>
-#include <fstream>
-#include <GLEW/Include/GL/glew.h>
-#include <GLM/include/gtc/matrix_transform.hpp>
 #include <GLM/include/gtc/type_ptr.hpp>
+#include <fstream>
+#define GLEW_STATIC
+#include <GLEW/Include/GL/glew.h>
 
 class Shader
 {

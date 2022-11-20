@@ -1,5 +1,5 @@
-#include <iostream>
-#include <Movement.h>
+#include "UTILS/include/Movement.h"
+
 Movement::Movement(glm::vec3 initialPos, glm::mat4& viewMatrix) : position{ initialPos }
 {
 	/*I obtain the camera forward direction by subtract the position of camera and

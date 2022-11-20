@@ -12,7 +12,7 @@ int main(void)
 
     if (!glfwInit())
         return -1;
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1920, 1080, "Proceduralverse", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -30,6 +30,7 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.15f, 0.35f, 1.0f, 1.0f);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

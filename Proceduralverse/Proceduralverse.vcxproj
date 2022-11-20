@@ -134,13 +134,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="API\STB_IMAGE\stb_image.cpp" />
-    <ClCompile Include="API\UTILS\classFile\FractalNoise.cpp" />
+    <ClCompile Include="API\UTILS\classFile\Movement.cpp" />
+    <ClCompile Include="API\UTILS\classFile\Shader.cpp" />
+    <ClCompile Include="API\UTILS\classFile\Texture.cpp" />
+    <ClCompile Include="API\UTILS\classFile\Transform.cpp" />
     <ClCompile Include="src\Main.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API\UTILS\include\FractalNoise.h" />
+    <ClInclude Include="API\UTILS\include\Constants.h" />
+    <ClInclude Include="API\UTILS\include\ErrorCheck.h" />
+    <ClInclude Include="API\UTILS\include\Movement.h" />
+    <ClInclude Include="API\UTILS\include\Shader.h" />
+    <ClInclude Include="API\UTILS\include\Texture.h" />
+    <ClInclude Include="API\UTILS\include\Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
