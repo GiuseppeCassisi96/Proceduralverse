@@ -15,7 +15,7 @@ Texture::Texture(const char* fileName)
 
 	/*I load the texture, the weight, height and number of channels are overwritten in
 	 *'width', 'height' and 'NOChannels' vars*/
-	int width, height, NOChannels;
+	int NOChannels;
 	unsigned char* data = stbi_load(fileName, &width, &height, &NOChannels, 0);
 
 	if(data)

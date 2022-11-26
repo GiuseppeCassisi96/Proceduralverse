@@ -1,11 +1,10 @@
 #include "UTILS/include/Transform.h"
-#include "UTILS/include/Constants.h"
 
 Transform::Transform()
 {
 	model = glm::mat4{ 1.0f };
 	view = glm::mat4{ 1.0f };
-	proj = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
+	proj = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 10000.0f);
 }
 
 glm::mat4 Transform::MoveModel(glm::vec3 movement)

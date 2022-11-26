@@ -21,7 +21,7 @@ static bool GLLogErrors(const char* functionName, int line)
     while (GLenum error = glGetError())
     {
         std::cout << "[OpenGL ERROR]: \nError code: " << error << "\nFunction name: " << functionName
-            << "\nLine: " << line << "\n";
+            << "\nLine: " << line  <<"\n";
         return false;
     }
     return true;

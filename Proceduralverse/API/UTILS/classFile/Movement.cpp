@@ -33,7 +33,6 @@ void Movement::Move(GLFWwindow* window, glm::mat4& viewMatrix)
 	{
 		position -= rightAxe * (movementSpeed * deltaTime);
 	}
-
 	rightAxe = glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), forwardAxe));
 	viewMatrix = glm::lookAt(position, position + (-forwardAxe), glm::vec3(0.0f, 1.0f, 0.0f));
 	

@@ -7,4 +7,5 @@ class Texture
 {
 public:
 	Texture(const char* fileName);
+	int width, height;
 };
