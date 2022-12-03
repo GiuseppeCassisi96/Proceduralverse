@@ -45,3 +45,5 @@ Texture::Texture(const char* fileName)
 	stbi_image_free(data);
 	
 }
+
+

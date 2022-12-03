@@ -11,11 +11,11 @@ class Shader
 {
 public:
 	Shader(const char* vertexShaderPath, const char* fragmentShaderPath);
-	Shader(const char* vertexShaderPath, const char* tcsShaderPath, const char* tesShaderPath, const char* fragmentShaderPath);
 	void DeleteShaders();
 	void DeleteProgram();
 	void UseProgram();
 	void SetUniformMatrix4(const char* uniformParamName, glm::mat4& value);
+	void SetUniformMatrix3(const char* uniformParamName, glm::mat3& value);
 	void SetUniformFloat(const char* uniformParamName, float value);
 	void SetUniformInt(const char* uniformParamName, int value);
 private:

@@ -107,13 +107,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API\ASSIMP;C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API\GLEW\Lib\x64;C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API\GLFW\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies); glfw3.lib;opengl32.lib;glew32s.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API\GLEW\Lib\x64;C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API\ASSIMP\Lib;C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API\GLFW\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3.lib;opengl32.lib;glew32s.lib;assimp-vc143-mtd.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,10 +134,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="API\STB_IMAGE\stb_image.cpp" />
+    <ClCompile Include="API\UTILS\classFile\FractalNoise.cpp" />
+    <ClCompile Include="API\UTILS\classFile\Mesh.cpp" />
+    <ClCompile Include="API\UTILS\classFile\Model.cpp" />
     <ClCompile Include="API\UTILS\classFile\Movement.cpp" />
     <ClCompile Include="API\UTILS\classFile\Shader.cpp" />
+    <ClCompile Include="API\UTILS\classFile\Terrain.cpp" />
     <ClCompile Include="API\UTILS\classFile\Texture.cpp" />
-    <ClCompile Include="API\UTILS\classFile\Transform.cpp" />
     <ClCompile Include="src\Main.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -145,16 +148,19 @@
   <ItemGroup>
     <ClInclude Include="API\UTILS\include\Constants.h" />
     <ClInclude Include="API\UTILS\include\ErrorCheck.h" />
+    <ClInclude Include="API\UTILS\include\FractalNoise.h" />
+    <ClInclude Include="API\UTILS\include\Mesh.h" />
+    <ClInclude Include="API\UTILS\include\Model.h" />
     <ClInclude Include="API\UTILS\include\Movement.h" />
     <ClInclude Include="API\UTILS\include\Shader.h" />
+    <ClInclude Include="API\UTILS\include\Terrain.h" />
     <ClInclude Include="API\UTILS\include\Texture.h" />
-    <ClInclude Include="API\UTILS\include\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Assets\Shaders\Proceduralverse.frag" />
-    <None Include="src\Assets\Shaders\Proceduralverse.tesc" />
-    <None Include="src\Assets\Shaders\Proceduralverse.tese" />
     <None Include="src\Assets\Shaders\Proceduralverse.vert" />
+    <None Include="src\Assets\Shaders\TreeShader.frag" />
+    <None Include="src\Assets\Shaders\TreeShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -30,7 +30,16 @@
     <ClCompile Include="API\UTILS\classFile\Texture.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="API\UTILS\classFile\Transform.cpp">
+    <ClCompile Include="API\UTILS\classFile\Model.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UTILS\classFile\Mesh.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UTILS\classFile\Terrain.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UTILS\classFile\FractalNoise.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,14 +59,23 @@
     <ClInclude Include="API\UTILS\include\Texture.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="API\UTILS\include\Transform.h">
+    <ClInclude Include="API\UTILS\include\Model.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\Mesh.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\Terrain.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\FractalNoise.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Assets\Shaders\Proceduralverse.frag" />
     <None Include="src\Assets\Shaders\Proceduralverse.vert" />
-    <None Include="src\Assets\Shaders\Proceduralverse.tesc" />
-    <None Include="src\Assets\Shaders\Proceduralverse.tese" />
+    <None Include="src\Assets\Shaders\TreeShader.vert" />
+    <None Include="src\Assets\Shaders\TreeShader.frag" />
   </ItemGroup>
 </Project>
