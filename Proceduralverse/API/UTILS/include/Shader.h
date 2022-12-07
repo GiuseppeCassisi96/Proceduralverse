@@ -18,6 +18,7 @@ public:
 	void SetUniformMatrix3(const char* uniformParamName, glm::mat3& value);
 	void SetUniformFloat(const char* uniformParamName, float value);
 	void SetUniformInt(const char* uniformParamName, int value);
+	void SetUniformTexture(const char* uniformParamName, int value);
 private:
 	unsigned int program;
 	unsigned int vertexObj, fragmentObj, tcsObj, tesObj;

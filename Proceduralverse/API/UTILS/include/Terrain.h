@@ -5,7 +5,12 @@
 #include <GLM/include/vec3.hpp>
 #include <iostream>
 #include <GLEW/Include/GL/glew.h>
+#include <GLM/include/fwd.hpp>
 
+#include "Shader.h"
+#include "UTILS/include/Model.h"
+#include "UTILS/include/FractalNoise.h"
+#include "UTILS/include/Constants.h"
 class Terrain
 {
 
@@ -16,13 +21,12 @@ public:
 		glm::vec3 Position;
 		glm::vec2 UVCoord;
 	};
-	Terrain(int meshRes);
-	void DrawTerrain();
-	int meshResolution;
+	Terrain();
+	void DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader);
+	std::vector<TerrainVertex> GetTerrainVertices();
 private:
 	void SetupTerrain();
 	unsigned int VAO, VBO, EBO;
-	unsigned int XDim, YDim;
 	std::vector<TerrainVertex> vertices;
 	std::vector<unsigned int> indices;
 };

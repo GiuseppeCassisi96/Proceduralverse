@@ -11,7 +11,7 @@ class Movement
 {
 public:
 	float currentTime = 0.0, lastTime = 0.0, deltaTime = 0.0;
-	float movementSpeed = 90.0f;
+	float movementSpeed = 140.0f;
 	float yaw = 0.0f, pitch = 0.0f;
 	float rotationSensitivity = 0.1f;
 	float lastX = WIDTH / 2, lastY = HEIGHT / 2;

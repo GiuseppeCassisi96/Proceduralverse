@@ -77,11 +77,17 @@ void Shader::SetUniformMatrix3(const char* uniformParamName, glm::mat3& value)
 
 void Shader::SetUniformFloat(const char* uniformParamName, float value)
 {
-	unsigned int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
+	const unsigned int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
 	glUniform1f(uniformParamLoc, value);
 }
 
 void Shader::SetUniformInt(const char* uniformParamName, int value)
+{
+	const unsigned int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
+	glUniform1i(uniformParamLoc, value);
+}
+
+void Shader::SetUniformTexture(const char* uniformParamName, int value)
 {
 	const unsigned int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
 	glUniform1i(uniformParamLoc, value);

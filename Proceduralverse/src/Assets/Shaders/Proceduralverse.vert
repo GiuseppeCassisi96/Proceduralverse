@@ -113,11 +113,11 @@ uniform mat4 proj;
 uniform float frequency;
 uniform int octaves;
 uniform float amplitude;
-uniform sampler2D HeightMap;
 uniform float heightScale;
 uniform float seed;
-
+uniform sampler2D HeightMap;
 out vec3 color;
+out vec2 vertUVcoord;
 
 float fractalNoise(vec2 inputVector, float seed)
 {
@@ -126,7 +126,7 @@ float fractalNoise(vec2 inputVector, float seed)
     float result = snoise(vec3(inputVector*f, seed)) * a;
     for(int i = 1; i < octaves; i++)
     {
-        result +=snoise(vec3(inputVector * f ,seed)) * a;
+        result += snoise(vec3(inputVector * f ,seed)) * a;
         f *= 2.0;
         a *= 0.5;
     }
@@ -137,9 +137,19 @@ void main()
 {
     float Height;
     Height = fractalNoise(cpuUVCoord, seed);
-    Height = smoothstep(-1.0, 1.0, Height);
     vec3 randomPos = cpuPos;
-    randomPos.y = Height * heightScale;
+    if(Height < 0)
+    {
+        randomPos.y = Height * (heightScale * 0.5);
+    }
+    else
+    {
+        randomPos.y = Height * heightScale;
+    }
+
+    vertUVcoord = cpuUVCoord;
     color = vec3(Height);
+//    vec3 randomPos = cpuPos;
+//    randomPos.y = texture(HeightMap,cpuUVCoord).y * heightScale;
 	gl_Position = proj * view * model * vec4(randomPos, 1.0f);
 }

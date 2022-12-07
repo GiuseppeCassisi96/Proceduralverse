@@ -108,6 +108,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API\ASSIMP;C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +142,7 @@
     <ClCompile Include="API\UTILS\classFile\Shader.cpp" />
     <ClCompile Include="API\UTILS\classFile\Terrain.cpp" />
     <ClCompile Include="API\UTILS\classFile\Texture.cpp" />
+    <ClCompile Include="API\UTILS\classFile\Tree.cpp" />
     <ClCompile Include="src\Main.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\UNIMI\Progetto_RTGP\Proceduralverse\Proceduralverse\API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -155,6 +157,7 @@
     <ClInclude Include="API\UTILS\include\Shader.h" />
     <ClInclude Include="API\UTILS\include\Terrain.h" />
     <ClInclude Include="API\UTILS\include\Texture.h" />
+    <ClInclude Include="API\UTILS\include\Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Assets\Shaders\Proceduralverse.frag" />

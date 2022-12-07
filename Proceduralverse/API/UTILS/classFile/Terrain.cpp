@@ -1,32 +1,30 @@
 #include "UTILS/include/Terrain.h"
 
-Terrain::Terrain(int meshRes) : meshResolution(meshRes)
+Terrain::Terrain()
 {
+    vertices.reserve(MESH_RESOLUTION * MESH_RESOLUTION);
+    indices.reserve((MESH_RESOLUTION - 1) * (MESH_RESOLUTION - 1) * 6);
     SetupTerrain();
 }
 
 void Terrain::SetupTerrain()
 {
-    std::cout << "XDim: " << "\n";
-    std::cin >> XDim;
-    std::cout << "YDim: " << "\n";
-    std::cin >> YDim;
 
-    for (int i = 0; i < meshResolution; i++)
+    for (int i = 0; i < MESH_RESOLUTION; i++)
     {
-        for (int j = 0; j < meshResolution; j++)
+        for (int j = 0; j < MESH_RESOLUTION; j++)
         {
-            const auto fXDim = static_cast<float>(XDim);
-            const auto fYDim = static_cast<float>(YDim);
+            const auto fXDim = static_cast<float>(XDIM);
+            const auto fYDim = static_cast<float>(YDIM);
             const auto fi = static_cast<float>(i);
             const auto fj = static_cast<float>(j);
-            const auto fMeshResolution = static_cast<float>(meshResolution);
+            const auto fMeshResolution = static_cast<float>(MESH_RESOLUTION);
             TerrainVertex tempVertex;
             tempVertex.Position = glm::vec3
             (
-                -fXDim / 2.0f + fXDim * fi / fMeshResolution //X
+                i
                 , 0.0f //Y
-                , -fYDim / 2.0f + fYDim * fj / fMeshResolution //Z
+                ,j
             );
             tempVertex.UVCoord = glm::vec2
             (
@@ -36,24 +34,26 @@ void Terrain::SetupTerrain()
             vertices.push_back(tempVertex);
         }
     }
+
+
     int rowOffset = 0;
-    for(int i = 0; i < meshResolution-1; i++)
+    for(int i = 0; i < MESH_RESOLUTION -1; i++)
     {
-	    for(int j = 0; j < meshResolution-1; j++)
+	    for(int j = 0; j < MESH_RESOLUTION -1; j++)
 	    {
             //First triangle
-            indices.emplace_back(j + rowOffset + meshResolution);
+            indices.emplace_back(j + rowOffset + MESH_RESOLUTION);
             indices.emplace_back(j + rowOffset);
             indices.emplace_back(j + 1 + rowOffset);
             
 
             //Second triangle
             indices.emplace_back(j + 1 + rowOffset);
-            indices.emplace_back(j + rowOffset + meshResolution + 1);
-            indices.emplace_back(j + rowOffset + meshResolution);
+            indices.emplace_back(j + rowOffset + MESH_RESOLUTION + 1);
+            indices.emplace_back(j + rowOffset + MESH_RESOLUTION);
             
 	    }
-        rowOffset += meshResolution;
+        rowOffset += MESH_RESOLUTION;
     }
 
 
@@ -79,9 +79,24 @@ void Terrain::SetupTerrain()
 
 }
 
-void Terrain::DrawTerrain()
+
+
+void Terrain::DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader)
 {
+    terrainModel = glm::mat4{ 1.0f };
+    terrainModel = glm::translate(terrainModel, glm::vec3(0.0f));
+    terrainModel = glm::rotate(terrainModel, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    terrainModel = glm::scale(terrainModel, glm::vec3(XDIM, 1.0f, YDIM));
+    terrainShader.UseProgram();
+    terrainShader.SetUniformMatrix4("model", terrainModel);
+    terrainShader.SetUniformMatrix4("view", cameraView);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES,  static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
+
+std::vector<Terrain::TerrainVertex> Terrain::GetTerrainVertices()
+{
+    return vertices;
+}
+

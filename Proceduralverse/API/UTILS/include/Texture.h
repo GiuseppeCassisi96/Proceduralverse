@@ -11,5 +11,6 @@ class Texture
 {
 public:
 	Texture(const char* fileName);
+	Texture(std::vector<float>& HeightMap, GLenum TextureNum, int res, Shader& shader);
 	int width, height;
 };
