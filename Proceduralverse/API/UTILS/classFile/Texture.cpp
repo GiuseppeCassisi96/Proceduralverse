@@ -46,7 +46,7 @@ Texture::Texture(const char* fileName)
 	
 }
 
-Texture::Texture(std::vector<float>& HeightMap, GLenum TextureNum, int res, Shader& shader)
+Texture::Texture(std::vector<float>& HeightMap, GLenum TextureNum, int value, Shader& shader)
 {
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
@@ -59,10 +59,11 @@ Texture::Texture(std::vector<float>& HeightMap, GLenum TextureNum, int res, Shad
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, res, res, 0,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, 
+		MESH_RESOLUTION, MESH_RESOLUTION, 0,
 		GL_R32F, GL_FLOAT, HeightMap.data());
 
-	shader.SetUniformTexture("HeightMap", 0);
+	shader.SetUniformTexture("HeightMap", value);
 }
 
 

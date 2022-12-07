@@ -93,6 +93,12 @@ void Shader::SetUniformTexture(const char* uniformParamName, int value)
 	glUniform1i(uniformParamLoc, value);
 }
 
+void Shader::SetSubroutine(const char* functionName, GLenum shaderType)
+{
+	const unsigned int subroutineIndex = glGetSubroutineIndex(program, shaderType, functionName);
+	glUniformSubroutinesuiv(shaderType, 1, &subroutineIndex);
+}
+
 void Shader::CompileShader(const char* shaderName, unsigned int &shaderObj,
 	unsigned int shaderType)
 {

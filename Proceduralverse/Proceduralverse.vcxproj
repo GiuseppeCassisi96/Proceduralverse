@@ -162,8 +162,6 @@
   <ItemGroup>
     <None Include="src\Assets\Shaders\Proceduralverse.frag" />
     <None Include="src\Assets\Shaders\Proceduralverse.vert" />
-    <None Include="src\Assets\Shaders\TreeShader.frag" />
-    <None Include="src\Assets\Shaders\TreeShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

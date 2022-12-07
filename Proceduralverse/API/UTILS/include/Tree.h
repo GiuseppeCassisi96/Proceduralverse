@@ -16,7 +16,8 @@ public:
 	Tree(int treeCount,  const std::vector<float>& heightMap);
 	void FillTreeArray();
 	std::vector<glm::vec3> treePositions;
-	void DrawTrees(glm::mat4& treeModel, glm::mat4 cameraView ,glm::mat3& treeNormal, Shader& treeShader, Model& tree);
+	void DrawTrees(glm::mat4& treeModel, glm::mat4 cameraView ,glm::mat3& treeNormal, 
+		Shader& treeShader, Model& tree, int subroutineIndex);
 private:
 	int treeCount;
 	std::vector<float> heigthMap;

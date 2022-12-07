@@ -81,13 +81,15 @@ void Terrain::SetupTerrain()
 
 
 
-void Terrain::DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader)
+void Terrain::DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader, int subroutineIndex)
 {
     terrainModel = glm::mat4{ 1.0f };
     terrainModel = glm::translate(terrainModel, glm::vec3(0.0f));
     terrainModel = glm::rotate(terrainModel, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     terrainModel = glm::scale(terrainModel, glm::vec3(XDIM, 1.0f, YDIM));
     terrainShader.UseProgram();
+    terrainShader.SetSubroutine("TerrainGeneration", GL_VERTEX_SHADER);
+    terrainShader.SetSubroutine("TerrainFrag", GL_FRAGMENT_SHADER);
     terrainShader.SetUniformMatrix4("model", terrainModel);
     terrainShader.SetUniformMatrix4("view", cameraView);
     glBindVertexArray(VAO);

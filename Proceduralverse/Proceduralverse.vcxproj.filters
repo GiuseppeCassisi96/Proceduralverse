@@ -81,7 +81,5 @@
   <ItemGroup>
     <None Include="src\Assets\Shaders\Proceduralverse.frag" />
     <None Include="src\Assets\Shaders\Proceduralverse.vert" />
-    <None Include="src\Assets\Shaders\TreeShader.vert" />
-    <None Include="src\Assets\Shaders\TreeShader.frag" />
   </ItemGroup>
 </Project>

@@ -29,7 +29,8 @@ void Tree::FillTreeArray()
   
 }
 
-void Tree::DrawTrees(glm::mat4& treeModel, glm::mat4 cameraView, glm::mat3& treeNormal, Shader& treeShader, Model& tree)
+void Tree::DrawTrees(glm::mat4& treeModel, glm::mat4 cameraView, glm::mat3& treeNormal, Shader& treeShader
+	, Model& tree, int subroutineIndex)
 {
 	for (int i = 0; i < treePositions.size(); i++)
 	{
@@ -43,6 +44,8 @@ void Tree::DrawTrees(glm::mat4& treeModel, glm::mat4 cameraView, glm::mat3& tree
 		  the 4th column because we do not need translations for normals.*/
 		treeNormal = inverseTranspose(glm::mat3(cameraView * treeModel));
 		treeShader.UseProgram();
+		treeShader.SetSubroutine("TreeVertShader", GL_VERTEX_SHADER);
+		treeShader.SetSubroutine("TreeFrag", GL_FRAGMENT_SHADER);
 		treeShader.SetUniformMatrix4("model", treeModel);
 		treeShader.SetUniformMatrix4("view", cameraView);
 		treeShader.SetUniformMatrix3("normalMatrix", treeNormal);

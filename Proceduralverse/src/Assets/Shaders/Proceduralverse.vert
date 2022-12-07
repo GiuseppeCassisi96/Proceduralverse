@@ -1,8 +1,4 @@
 #version 410 core
-
-layout (location = 0) in vec3 cpuPos;
-layout (location = 1) in vec2 cpuUVCoord;
-
 //
 // Description : Array and textureless GLSL 2D/3D/4D simplex 
 //               noise functions.
@@ -104,20 +100,31 @@ float snoise(vec3 v)
 //
 //
 
+//Input vars
+layout (location = 0) in vec3 cpuPos;
+layout (location = 1) in vec2 cpuUVCoord;
+layout(location = 2) in vec3 cpuNormal;
 
+//Subroutine type
+subroutine vec4 ProceduralVerseSub();
 
-
+//Uniform vars 
+subroutine uniform ProceduralVerseSub PVS;
 uniform mat4 model;           
 uniform mat4 view;            
-uniform mat4 proj;      
+uniform mat4 proj;    
+uniform mat3 normalMatrix;
 uniform float frequency;
 uniform int octaves;
 uniform float amplitude;
 uniform float heightScale;
 uniform float seed;
 uniform sampler2D HeightMap;
+
+//Output vars
 out vec3 color;
 out vec2 vertUVcoord;
+out vec3 normal;
 
 float fractalNoise(vec2 inputVector, float seed)
 {
@@ -133,7 +140,8 @@ float fractalNoise(vec2 inputVector, float seed)
     return result;
 }
 
-void main()
+subroutine(ProceduralVerseSub) //index 0
+vec4 TerrainGeneration()
 {
     float Height;
     Height = fractalNoise(cpuUVCoord, seed);
@@ -149,7 +157,18 @@ void main()
 
     vertUVcoord = cpuUVCoord;
     color = vec3(Height);
-//    vec3 randomPos = cpuPos;
-//    randomPos.y = texture(HeightMap,cpuUVCoord).y * heightScale;
-	gl_Position = proj * view * model * vec4(randomPos, 1.0f);
+    return proj * view * model * vec4(randomPos, 1.0f);
+}
+
+subroutine(ProceduralVerseSub) //index 1
+vec4 TreeVertShader()
+{
+    //We apply normal matrix transformation 
+	normal = normalize(normalMatrix * cpuNormal);
+	return proj * view * model * vec4(cpuPos,1.0);
+}
+
+void main()
+{
+	gl_Position = PVS();
 }

@@ -73,25 +73,21 @@ int main(void)
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetKeyCallback(window, key_callback);
 
-    Shader treeShader("src/Assets/Shaders/TreeShader.vert",
-        "src/Assets/Shaders/TreeShader.frag");
-
-    Shader terrainShader{
+    Shader ProceduralVerseShader{
     "src/Assets/Shaders/Proceduralverse.vert",
     "src/Assets/Shaders/Proceduralverse.frag" };
-
-    
-    //I'm setting the terrain generator parameters which are editable at runtime 
-    terrainShader.UseProgram();
-    terrainShader.SetUniformFloat("frequency", frequency);
-    terrainShader.SetUniformInt("octaves", octaves);
-    terrainShader.SetUniformFloat("amplitude", amplitude);
-    terrainShader.SetUniformFloat("seed", seed);
-    terrainShader.SetUniformFloat("heightScale", heightScale);
-    terrainShader.SetUniformMatrix4("proj", proj);
-
     ElevationMap.CreateHeightMap();
     BiomeMap.CreateHeightMap();
+    
+    //I'm setting the terrain generator parameters which are editable at runtime 
+    ProceduralVerseShader.UseProgram();
+    ProceduralVerseShader.SetUniformFloat("frequency", frequency);
+    ProceduralVerseShader.SetUniformInt("octaves", octaves);
+    ProceduralVerseShader.SetUniformFloat("amplitude", amplitude);
+    ProceduralVerseShader.SetUniformFloat("seed", seed);
+    ProceduralVerseShader.SetUniformFloat("heightScale", heightScale);
+    ProceduralVerseShader.SetUniformMatrix4("proj", proj);
+    Texture texture{ ElevationMap.HeightMap, GL_TEXTURE0,0,ProceduralVerseShader };
 
     Terrain terrain{};
     Model tree{ "src/Assets/Models/tree_obj.obj" };
@@ -101,10 +97,7 @@ int main(void)
     glm::mat4 treeModel{ 1.0f };
 	glm::mat3 treeNormal{ 1.0f };
 
-    treeShader.UseProgram();
-    treeShader.SetUniformMatrix4("proj", proj);
-
-    Texture texture{ ElevationMap.HeightMap, GL_TEXTURE0,MESH_RESOLUTION,terrainShader };
+    
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -119,15 +112,14 @@ int main(void)
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
 
-        treePositionManager.DrawTrees(treeModel, cameraView, treeNormal, treeShader, tree);
+        treePositionManager.DrawTrees(treeModel, cameraView, treeNormal, ProceduralVerseShader, tree, 1);
 
-        terrain.DrawTerrain(terrainModel,cameraView,terrainShader);
+        terrain.DrawTerrain(terrainModel,cameraView,ProceduralVerseShader, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    terrainShader.DeleteProgram();
-    treeShader.DeleteProgram();
+    ProceduralVerseShader.DeleteProgram();
     glfwTerminate();
     return 0;
 }

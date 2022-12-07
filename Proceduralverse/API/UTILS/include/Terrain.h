@@ -22,7 +22,7 @@ public:
 		glm::vec2 UVCoord;
 	};
 	Terrain();
-	void DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader);
+	void DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader, int subroutineIndex);
 	std::vector<TerrainVertex> GetTerrainVertices();
 private:
 	void SetupTerrain();

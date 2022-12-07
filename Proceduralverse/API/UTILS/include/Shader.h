@@ -19,6 +19,7 @@ public:
 	void SetUniformFloat(const char* uniformParamName, float value);
 	void SetUniformInt(const char* uniformParamName, int value);
 	void SetUniformTexture(const char* uniformParamName, int value);
+	void SetSubroutine(const char* functionName, GLenum shaderType);
 private:
 	unsigned int program;
 	unsigned int vertexObj, fragmentObj, tcsObj, tesObj;
