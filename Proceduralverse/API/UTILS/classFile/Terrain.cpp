@@ -28,7 +28,7 @@ void Terrain::SetupTerrain()
             tempVertex.Position = glm::vec3
             (
                 i
-                , 0.0f //Y
+                , heightMap[index] //Y
                 ,j
             );
             tempVertex.UVCoord = glm::vec2
@@ -36,7 +36,6 @@ void Terrain::SetupTerrain()
                 fi / fMeshResolution, //U
                 fj / fMeshResolution  //V
             );
-            tempVertex.height = heightMap[index];
             index++;
             vertices.push_back(tempVertex);
         }
@@ -82,8 +81,6 @@ void Terrain::SetupTerrain()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(TerrainVertex), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(TerrainVertex), (void*)(5 * sizeof(float)));
-    glEnableVertexAttribArray(3);
     glBindVertexArray(0);
 
 }
@@ -97,8 +94,9 @@ void Terrain::DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader
     terrainModel = glm::translate(terrainModel, glm::vec3(0.0f));
     terrainModel = glm::rotate(terrainModel, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     terrainModel = glm::scale(terrainModel, glm::vec3(XDIM, 1.0f, ZDIM));
-    terrainShader.UseProgram();
-    texture.UseTexture(terrainShader);
+
+    texture.UseTexture(terrainShader, GL_TEXTURE0);
+
     terrainShader.SetSubroutine("TerrainGeneration", GL_VERTEX_SHADER);
     terrainShader.SetSubroutine("TerrainFrag", GL_FRAGMENT_SHADER);
     terrainShader.SetUniformMatrix4("model", terrainModel);

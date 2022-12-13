@@ -19,7 +19,6 @@ public:
 	{
 		glm::vec3 Position;
 		glm::vec2 UVCoord;
-		float height;
 	};
 	Terrain(std::vector<float> heightMap);
 	void DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader, int subroutineIndex, std::vector<float>

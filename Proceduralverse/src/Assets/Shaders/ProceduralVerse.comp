@@ -138,7 +138,7 @@ void main() {
     float V = float(texelCoord.y)/(gl_NumWorkGroups.y);
 
     float height = fractalNoise(vec2(U,V), seed);
-
+    
     // store new value in image
     imageStore( out_tex, texelCoord, vec4( height, 0.0, 0.0, 0.0 ) );
 }

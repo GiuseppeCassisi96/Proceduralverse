@@ -45,7 +45,7 @@ void Tree::DrawTrees(glm::mat4& treeModel, glm::mat4 cameraView, glm::mat3& tree
 		  transpose of the 3x3 submatrix(upper left) of the modelview. We do not consider
 		  the 4th column because we do not need translations for normals.*/
 		treeNormal = inverseTranspose(glm::mat3(cameraView * treeModel));
-		treeShader.UseProgram();
+
 		treeShader.SetSubroutine("TreeVertShader", GL_VERTEX_SHADER);
 		treeShader.SetSubroutine("TreeFrag", GL_FRAGMENT_SHADER);
 		treeShader.SetUniformMatrix4("model", treeModel);

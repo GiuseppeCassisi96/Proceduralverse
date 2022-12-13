@@ -78,12 +78,13 @@ int main(void)
     compute.SetUniformInt("octaves", octaves);
     compute.SetUniformFloat("seed", seed);
 
-    Texture texture{ GL_TEXTURE0 };
-    texture.UseTexture(compute);
+    Texture emptyHM{ GL_TEXTURE0 };
+    
+
+    emptyHM.UseTexture(compute, GL_TEXTURE0);
     compute.DispatchCompute();
-    ElevationMap = texture.GetValuesOfMap();
-  
-    //I'm setting the terrain generator parameters which are editable at runtime 
+    ElevationMap = emptyHM.GetValuesOfMap();
+
     ProceduralVerseShader.UseProgram();
     ProceduralVerseShader.SetUniformMatrix4("proj", proj);
     ProceduralVerseShader.SetUniformFloat("heightScale", HEIGHT_SCALE);
@@ -95,7 +96,6 @@ int main(void)
     glm::mat4 terrainModel{ 1.0f };
     glm::mat4 treeModel{ 1.0f };
 	glm::mat3 treeNormal{ 1.0f };
-
     
     while (!glfwWindowShouldClose(window))
     {
@@ -111,9 +111,8 @@ int main(void)
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
 
-       
 
-        terrain.DrawTerrain(terrainModel, cameraView, ProceduralVerseShader, 0, ElevationMap, texture);
+        terrain.DrawTerrain(terrainModel, cameraView, ProceduralVerseShader, 0, ElevationMap, emptyHM);
         treePositionManager.DrawTrees(treeModel, cameraView, treeNormal, ProceduralVerseShader, tree, 1);
 
         glfwSwapBuffers(window);

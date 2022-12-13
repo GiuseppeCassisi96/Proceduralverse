@@ -127,6 +127,7 @@ void Shader::SetSubroutine(const char* functionName, GLenum shaderType)
 void Shader::DispatchCompute()
 {
 	glDispatchCompute(MESH_RESOLUTION, MESH_RESOLUTION, 1);
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 }
 
 void Shader::CompileShader(const char* shaderName, unsigned int &shaderObj,

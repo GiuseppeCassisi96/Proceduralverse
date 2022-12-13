@@ -20,8 +20,6 @@ Texture::Texture(const char* fileName)
 
 	if(data)
 	{
-		//Like any of the previous objects in OpenGL, textures are referenced with an ID
-		unsigned int textureID;
 		glGenTextures(1, &textureID);
 		//We bind the texture obj with GL_TEXTURE_2D
 		glBindTexture(GL_TEXTURE_2D, textureID);
@@ -49,16 +47,31 @@ Texture::Texture(const char* fileName)
 Texture::Texture(GLenum textureEnum)
 {
 	// generate texture
-	glGenTextures(1, &HeightTex);
+	glGenTextures(1, &textureID);
 	glActiveTexture(textureEnum);
-	glBindTexture(GL_TEXTURE_2D, HeightTex);
+	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	// create empty texture
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, MESH_RESOLUTION, MESH_RESOLUTION, 0, GL_RED, GL_FLOAT, NULL);
-	glBindImageTexture(0, HeightTex, 0, GL_FALSE, 0, GL_READ_WRITE, GL_R32F);
+	glBindImageTexture(0, textureID, 0, GL_FALSE, 0, GL_READ_WRITE, GL_R32F);
+}
+
+Texture::Texture(GLenum textureEnum, std::vector<float> HeightMap)
+{
+	// generate texture
+	glGenTextures(1, &textureID);
+	glActiveTexture(textureEnum);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	//create fully texture
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, MESH_RESOLUTION, MESH_RESOLUTION, 0, GL_RED, GL_FLOAT, HeightMap.data());
+	glBindImageTexture(0, textureID, 0, GL_FALSE, 0, GL_READ_WRITE, GL_R32F);
 }
 
 std::vector<float> Texture::GetValuesOfMap()
@@ -66,15 +79,14 @@ std::vector<float> Texture::GetValuesOfMap()
 	unsigned int collection_size = MESH_RESOLUTION * MESH_RESOLUTION;
 	std::vector<float> compute_data(collection_size);
 	glGetTexImage(GL_TEXTURE_2D, 0, GL_RED, GL_FLOAT, compute_data.data());
-
 	return compute_data;
 }
 
-void Texture::UseTexture(Shader& shader)
+void Texture::UseTexture(Shader& shader, GLenum textureNum)
 {
 	shader.UseProgram();
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, HeightTex);
+	glActiveTexture(textureNum);
+	glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
 

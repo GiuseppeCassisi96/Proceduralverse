@@ -5,7 +5,6 @@
 layout (location = 0) in vec3 cpuPos;
 layout (location = 1) in vec2 cpuUVCoord;
 layout(location = 2) in vec3 cpuNormal;
-layout(location = 3) in float cpuHeight;
 
 //Subroutine type
 subroutine vec4 ProceduralVerseSub();
@@ -19,6 +18,7 @@ uniform mat4 view;
 uniform mat4 proj;    
 uniform mat3 normalMatrix;
 uniform float heightScale;
+uniform sampler2D heightMap;
 
 //Output vars
 out vec3 color;
@@ -29,8 +29,13 @@ subroutine(ProceduralVerseSub) //index 0
 vec4 TerrainGeneration()
 {
     vec3 randomPos = cpuPos;
-    color = vec3(cpuHeight);
-    randomPos.y = cpuHeight * heightScale;
+//    randomPos.y = texture(heightMap, cpuUVCoord).x * heightScale;
+//    color = vec3(texture(heightMap, cpuUVCoord).x);
+	
+	randomPos.y = cpuPos.y * heightScale;
+	color = vec3(cpuPos.y);
+
+
     return proj * view * model * vec4(randomPos, 1.0f);
 }
 
