@@ -6,10 +6,9 @@
 #include <iostream>
 #include <GLEW/Include/GL/glew.h>
 #include <GLM/include/fwd.hpp>
-
 #include "Shader.h"
+#include "Texture.h"
 #include "UTILS/include/Model.h"
-#include "UTILS/include/FractalNoise.h"
 #include "UTILS/include/Constants.h"
 class Terrain
 {
@@ -20,14 +19,18 @@ public:
 	{
 		glm::vec3 Position;
 		glm::vec2 UVCoord;
+		float height;
 	};
-	Terrain();
-	void DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader, int subroutineIndex);
+	Terrain(std::vector<float> heightMap);
+	void DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader, int subroutineIndex, std::vector<float>
+	                 heightMap, Texture& texture);
 	std::vector<TerrainVertex> GetTerrainVertices();
+	
 private:
 	void SetupTerrain();
 	unsigned int VAO, VBO, EBO;
-	std::vector<TerrainVertex> vertices;
 	std::vector<unsigned int> indices;
+	std::vector<TerrainVertex> vertices;
+	std::vector<float> heightMap;
 };
 

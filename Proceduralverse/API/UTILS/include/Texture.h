@@ -11,6 +11,9 @@ class Texture
 {
 public:
 	Texture(const char* fileName);
-	Texture(std::vector<float>& HeightMap, GLenum TextureNum, int value, Shader& shader);
+	Texture(GLenum textureEnum);
+	std::vector<float> GetValuesOfMap();
+	void UseTexture(Shader& shader);
 	int width, height;
+	unsigned int HeightTex;
 };

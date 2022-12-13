@@ -39,9 +39,6 @@
     <ClCompile Include="API\UTILS\classFile\Terrain.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="API\UTILS\classFile\FractalNoise.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
     <ClCompile Include="API\UTILS\classFile\Tree.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
@@ -71,9 +68,6 @@
     <ClInclude Include="API\UTILS\include\Terrain.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="API\UTILS\include\FractalNoise.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="API\UTILS\include\Tree.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
@@ -81,5 +75,6 @@
   <ItemGroup>
     <None Include="src\Assets\Shaders\Proceduralverse.frag" />
     <None Include="src\Assets\Shaders\Proceduralverse.vert" />
+    <None Include="src\Assets\Shaders\ProceduralVerse.comp" />
   </ItemGroup>
 </Project>

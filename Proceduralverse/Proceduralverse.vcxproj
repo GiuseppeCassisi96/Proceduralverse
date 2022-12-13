@@ -135,7 +135,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="API\STB_IMAGE\stb_image.cpp" />
-    <ClCompile Include="API\UTILS\classFile\FractalNoise.cpp" />
     <ClCompile Include="API\UTILS\classFile\Mesh.cpp" />
     <ClCompile Include="API\UTILS\classFile\Model.cpp" />
     <ClCompile Include="API\UTILS\classFile\Movement.cpp" />
@@ -150,7 +149,6 @@
   <ItemGroup>
     <ClInclude Include="API\UTILS\include\Constants.h" />
     <ClInclude Include="API\UTILS\include\ErrorCheck.h" />
-    <ClInclude Include="API\UTILS\include\FractalNoise.h" />
     <ClInclude Include="API\UTILS\include\Mesh.h" />
     <ClInclude Include="API\UTILS\include\Model.h" />
     <ClInclude Include="API\UTILS\include\Movement.h" />
@@ -160,6 +158,7 @@
     <ClInclude Include="API\UTILS\include\Tree.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\Assets\Shaders\ProceduralVerse.comp" />
     <None Include="src\Assets\Shaders\Proceduralverse.frag" />
     <None Include="src\Assets\Shaders\Proceduralverse.vert" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 #include "UTILS/include/Shader.h"
 
-
+#include "UTILS/include/Constants.h"
 
 
 Shader::Shader(const char* vertexShaderPath, const char* fragmentShaderPath)
@@ -44,12 +44,43 @@ Shader::Shader(const char* vertexShaderPath, const char* fragmentShaderPath)
 	DeleteShaders();
 }
 
+Shader::Shader(const char* computeShaderPath)
+{
+	std::ifstream computeStreamFile;
+	computeStreamFile.exceptions(std::ios::failbit | std::ios::badbit);
+	computeStreamFile.exceptions(std::ios::failbit | std::ios::badbit);
+	try
+	{
+		//Open file
+		computeStreamFile.open(computeShaderPath);
+		//Read the buffer stream and get the pointer to the file buffer (the content of the file);
+		computeStream << computeStreamFile.rdbuf();
+		//Convert the streamstring to string
+		computeShaderCode = computeStream.str();
+		//Close file
+		computeStreamFile.close();
+	}
+	catch (std::ifstream::failure e)
+	{
+		std::cout << "file non letto" << "\n";
+	}
+
+	//Create a program, that will contains our shader programs, with a program ID
+	program = glCreateProgram();
+	//Compile the shaders
+	CompileShader(computeShaderCode.c_str(), computeObj
+		, GL_COMPUTE_SHADER);
+	//Attaches a shader object to a program object
+	glAttachShader(program, computeObj);
+	//Links the program. Shader objects are used to create an executable that will run on the programmable shader
+	glLinkProgram(program);
+	glDeleteShader(computeObj);
+}
+
 void Shader::DeleteShaders()
 {
 	glDeleteShader(vertexObj);
 	glDeleteShader(fragmentObj);
-	glDeleteShader(tcsObj);
-	glDeleteShader(tesObj);
 }
 
 void Shader::DeleteProgram()
@@ -87,20 +118,19 @@ void Shader::SetUniformInt(const char* uniformParamName, int value)
 	glUniform1i(uniformParamLoc, value);
 }
 
-void Shader::SetUniformTexture(const char* uniformParamName, int value)
-{
-	const unsigned int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
-	glUniform1i(uniformParamLoc, value);
-}
-
 void Shader::SetSubroutine(const char* functionName, GLenum shaderType)
 {
 	const unsigned int subroutineIndex = glGetSubroutineIndex(program, shaderType, functionName);
 	glUniformSubroutinesuiv(shaderType, 1, &subroutineIndex);
 }
 
+void Shader::DispatchCompute()
+{
+	glDispatchCompute(MESH_RESOLUTION, MESH_RESOLUTION, 1);
+}
+
 void Shader::CompileShader(const char* shaderName, unsigned int &shaderObj,
-	unsigned int shaderType)
+                           unsigned int shaderType)
 {
 	//Creates shader reference objects
 	shaderObj = glCreateShader(shaderType);

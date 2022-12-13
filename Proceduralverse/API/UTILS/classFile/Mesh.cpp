@@ -3,7 +3,7 @@
 
 // We use initializer list and std::move in order to avoid a copy of the arguments
 Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices) noexcept :
-meshVertices(std::move(vertices)), meshIndices(std::move(indices))
+	meshVertices{ std::move(vertices) }, meshIndices{ std::move(indices) }
 {
 	SetupMesh();
 }
@@ -13,8 +13,8 @@ meshVertices(std::move(vertices)), meshIndices(std::move(indices))
  * instance (fully) to another instance (empty)
  */
 Mesh::Mesh(Mesh&& mesh) noexcept :
-	meshVertices(std::move(mesh.meshVertices)), meshIndices(std::move(mesh.meshIndices)),
-	VAO(mesh.VAO), VBO(mesh.VBO), EBO(mesh.EBO)
+	meshVertices{ std::move(mesh.meshVertices) }, meshIndices{ std::move(mesh.meshIndices) },
+	VAO{ mesh.VAO }, VBO{ mesh.VBO }, EBO{ mesh.EBO }
 {
 	mesh.VAO = 0;
 }
