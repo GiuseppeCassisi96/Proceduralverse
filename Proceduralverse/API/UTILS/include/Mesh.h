@@ -1,9 +1,12 @@
 #pragma once
 #define GLEW_STATIC
-#include <GLM/include/vec2.hpp>
-#include <GLM/include/vec3.hpp>
+#include <GLM/include/glm.hpp>
+#include <GLM/include/gtc/matrix_transform.hpp>
+#include <GLM/include/gtc/type_ptr.hpp>
 #include <vector>
 #include <GLEW/Include/GL/glew.h>
+#include <GLM/include/fwd.hpp>
+#include "UTILS/include/Constants.h"
 #include "UTILS/include/ErrorCheck.h"
 
 struct Vertex
@@ -28,7 +31,8 @@ class Mesh
 
 public:
 	//Constructor
-	Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices) noexcept;
+	Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices,
+		const std::vector<glm::mat4>& meshPositions = std::vector<glm::mat4>{0}) noexcept;
 
 	//COPY
 	Mesh(const Mesh& mesh) = delete;
@@ -46,7 +50,8 @@ public:
 	std::vector<unsigned int> meshIndices;
 	void DrawMesh();
 private:
-	unsigned int VBO, EBO, VAO;
+	unsigned int VBO, EBO, VAO, instanceVBO;
+	std::vector<glm::mat4> meshPositions;
 	void FreeGPUResources();
 	void SetupMesh();
 };

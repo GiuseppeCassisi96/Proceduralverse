@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <GLM/include/fwd.hpp>
+
 #include "ASSIMP/assimp//Importer.hpp"
 #include "ASSIMP/assimp/scene.h"
 #include "ASSIMP/assimp/postprocess.h"
@@ -18,9 +20,11 @@ public:
 	//I'm using '&&' operator because I manage R-Value 
 	Model(Model&& model) = default;
 	Model& operator=(Model&& model) noexcept = default;
-	Model(const std::string& path);
+	Model(const std::string& path, const std::vector<glm::mat4>& modelPositions 
+		= std::vector<glm::mat4>{0});
 	void DrawModel();
 private:
+	std::vector<glm::mat4> modelPositions;
 	void LoadModel(const std::string& path);
 	void ProcessNode(aiNode* node, const aiScene* scene);
 	Mesh ProcessMesh(aiMesh* mesh);

@@ -1,8 +1,6 @@
 #include "UTILS/include/Texture.h"
 
-
-
-Texture::Texture(const char* fileName)
+Texture::Texture(const char* fileName, GLenum textureEnum)
 {
 	/*I set the view option (Repeat, Clamp border, ecc...) of each axe (S and T -> U and V)
 	 * Target: specify the type of texture, we have a 2D texture so we put GL_TEXTURE_2D*/
@@ -11,16 +9,16 @@ Texture::Texture(const char* fileName)
 
 	/*I set the filter for magnifying and minifying*/
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	/*I load the texture, the weight, height and number of channels are overwritten in
-	 *'width', 'height' and 'NOChannels' vars*/
+	/*I load the texture, the weight, TexHeight and number of channels are overwritten in
+	 *'TexWidth', 'TexHeight' and 'NOChannels' vars*/
 	int NOChannels;
-	unsigned char* data = stbi_load(fileName, &width, &height, &NOChannels, 0);
-
+	unsigned char* data = stbi_load(fileName, &TexWidth, &TexHeight, &NOChannels, 0);
 	if(data)
 	{
 		glGenTextures(1, &textureID);
+		glActiveTexture(textureEnum);
 		//We bind the texture obj with GL_TEXTURE_2D
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		/*Specify the settings for the two-dimensional texture loaded before
@@ -30,10 +28,11 @@ Texture::Texture(const char* fileName)
 		 *border: this value must be 0
 		 *type: the type of data
 		 */
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, TexWidth, TexHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		//This will automatically generate all the required mipmaps for the currently bound texture
 		glGenerateMipmap(GL_TEXTURE_2D);
 		stbi_set_flip_vertically_on_load(true);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 	}
 	else
@@ -44,7 +43,7 @@ Texture::Texture(const char* fileName)
 	
 }
 
-Texture::Texture(GLenum textureEnum)
+Texture::Texture(GLenum textureEnum): TexWidth(MESH_RESOLUTION), TexHeight(MESH_RESOLUTION)
 {
 	// generate texture
 	glGenTextures(1, &textureID);
@@ -55,38 +54,30 @@ Texture::Texture(GLenum textureEnum)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	// create empty texture
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, MESH_RESOLUTION, MESH_RESOLUTION, 0, GL_RED, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, TexWidth, TexHeight, 0, GL_RED, GL_FLOAT, NULL);
 	glBindImageTexture(0, textureID, 0, GL_FALSE, 0, GL_READ_WRITE, GL_R32F);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-Texture::Texture(GLenum textureEnum, std::vector<float> HeightMap)
+void Texture::GetValuesOfMap(std::vector<float>& Heightmap)
 {
-	// generate texture
-	glGenTextures(1, &textureID);
-	glActiveTexture(textureEnum);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	//create fully texture
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, MESH_RESOLUTION, MESH_RESOLUTION, 0, GL_RED, GL_FLOAT, HeightMap.data());
-	glBindImageTexture(0, textureID, 0, GL_FALSE, 0, GL_READ_WRITE, GL_R32F);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RED, GL_FLOAT, Heightmap.data());
 }
 
-std::vector<float> Texture::GetValuesOfMap()
+void Texture::BindTexture(GLenum textureNum)
 {
-	unsigned int collection_size = MESH_RESOLUTION * MESH_RESOLUTION;
-	std::vector<float> compute_data(collection_size);
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_RED, GL_FLOAT, compute_data.data());
-	return compute_data;
-}
-
-void Texture::UseTexture(Shader& shader, GLenum textureNum)
-{
-	shader.UseProgram();
 	glActiveTexture(textureNum);
 	glBindTexture(GL_TEXTURE_2D, textureID);
+}
+
+void Texture::UnbindTexture()
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::DeleteTexture()
+{
+	glDeleteTextures(1, &textureID);
 }
 
 

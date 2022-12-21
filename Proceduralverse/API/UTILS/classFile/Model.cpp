@@ -1,12 +1,10 @@
 #include "UTILS/include/Model.h"
-
 #include <iostream>
 
-Model::Model(const std::string& path)
+Model::Model(const std::string& path, const std::vector<glm::mat4>& modelPositions ) : modelPositions{modelPositions}
 {
 	LoadModel(path);
 }
-
 
 
 void Model::LoadModel(const std::string& path)
@@ -88,7 +86,15 @@ Mesh Model::ProcessMesh(aiMesh* mesh)
 			indices.emplace_back(face.mIndices[j]);
 		}
 	}
-	return  Mesh(vertices, indices);
+	if(modelPositions.empty())
+	{
+		return Mesh(vertices, indices);
+	}
+	else
+	{
+		return  Mesh(vertices, indices, modelPositions);
+	}
+	
 }
 
 

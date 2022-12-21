@@ -1,15 +1,12 @@
 #pragma once
 #define GLEW_STATIC
 #include <vector>
-#include <GLM/include/vec2.hpp>
-#include <GLM/include/vec3.hpp>
-#include <iostream>
-#include <GLEW/Include/GL/glew.h>
 #include <GLM/include/fwd.hpp>
 #include "Shader.h"
 #include "Texture.h"
-#include "UTILS/include/Model.h"
 #include "UTILS/include/Constants.h"
+#include "UTILS/include/Movement.h"
+#include "UTILS/include/Mesh.h"
 class Terrain
 {
 
@@ -20,16 +17,16 @@ public:
 		glm::vec3 Position;
 		glm::vec2 UVCoord;
 	};
-	Terrain(std::vector<float> heightMap);
-	void DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader, int subroutineIndex, std::vector<float>
-	                 heightMap, Texture& texture);
+	Terrain(const std::vector<float>& heightMap);
+	void DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader,
+	                 Texture& grassTexture, Texture& snowTexture);
 	std::vector<TerrainVertex> GetTerrainVertices();
+
 	
 private:
-	void SetupTerrain();
+	void SetupTerrain(const std::vector<float>& heightMap);
 	unsigned int VAO, VBO, EBO;
 	std::vector<unsigned int> indices;
 	std::vector<TerrainVertex> vertices;
-	std::vector<float> heightMap;
 };
 
