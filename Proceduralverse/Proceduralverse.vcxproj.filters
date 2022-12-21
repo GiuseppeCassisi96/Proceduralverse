@@ -21,13 +21,60 @@
     <ClCompile Include="API\STB_IMAGE\stb_image.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="API\UTILS\classFile\FractalNoise.cpp">
+    <ClCompile Include="API\UTILS\classFile\Movement.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UTILS\classFile\Shader.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UTILS\classFile\Texture.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UTILS\classFile\Model.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UTILS\classFile\Mesh.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UTILS\classFile\Terrain.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="API\UTILS\classFile\Tree.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API\UTILS\include\FractalNoise.h">
+    <ClInclude Include="API\UTILS\include\Constants.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="API\UTILS\include\ErrorCheck.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\Movement.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\Shader.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\Texture.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\Model.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\Mesh.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\Terrain.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="API\UTILS\include\Tree.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Assets\Shaders\Proceduralverse.frag" />
+    <None Include="src\Assets\Shaders\Proceduralverse.vert" />
+    <None Include="src\Assets\Shaders\ProceduralVerse.comp" />
   </ItemGroup>
 </Project>

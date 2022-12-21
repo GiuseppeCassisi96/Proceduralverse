@@ -1,13 +1,16 @@
 #pragma once
-#include <Transform.h>
+
+#include <GLM/include/glm.hpp>
+#include <GLM/include/gtc/matrix_transform.hpp>
+#include <GLM/include/gtc/type_ptr.hpp>
+#include "GLM/include/gtc/matrix_inverse.hpp"
 #include <GLFW/Include/glfw3.h>
-#include "Constants.h"
+#include "UTILS/include/Constants.h"
 
 class Movement
 {
 public:
 	float currentTime = 0.0, lastTime = 0.0, deltaTime = 0.0;
-	float movementSpeed = 3.0f;
 	float yaw = 0.0f, pitch = 0.0f;
 	float rotationSensitivity = 0.1f;
 	float lastX = WIDTH / 2, lastY = HEIGHT / 2;
