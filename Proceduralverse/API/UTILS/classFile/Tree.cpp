@@ -1,12 +1,5 @@
 #include "UTILS/include/Tree.h"
 
-#include <chrono>
-#include <chrono>
-
-#include "UTILS/include/Mesh.h"
-#include "UTILS/include/Mesh.h"
-#include "UTILS/include/Mesh.h"
-#include "UTILS/include/Mesh.h"
 
 
 Tree::Tree(int iterations, std::vector < glm::mat4>& treePos, const std::vector<float>& heightMap, Terrain& terrain)

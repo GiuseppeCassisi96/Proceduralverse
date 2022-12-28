@@ -1,23 +1,7 @@
 #pragma once
-#include <chrono>
-#include <chrono>
-#include <chrono>
-#include <chrono>
-#include <format>
-#include <format>
 #include <vector>
 #include <GLM/include/fwd.hpp>
 
-#include "Mesh.h"
-#include "Mesh.h"
-#include "Mesh.h"
-#include "Mesh.h"
-#include "Mesh.h"
-#include "Mesh.h"
-#include "Mesh.h"
-#include "Mesh.h"
-#include "Mesh.h"
-#include "Mesh.h"
 #include "Model.h"
 #include "Shader.h"
 #include "Terrain.h"

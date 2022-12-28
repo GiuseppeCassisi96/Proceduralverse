@@ -5,6 +5,7 @@ Movement::Movement(glm::vec3 initialPos, glm::mat4& viewMatrix) : position{ init
 	/*I obtain the camera forward direction by subtract the position of camera and
 	 *the position of center of scene. I have a reverse order because I want a positive
 	 *Z-axis*/
+	
 	forwardAxe = glm::normalize(position - centerOfScene);
 	/*I obtain the rightAxe by doing the cross product between the UPWorldAxe and forwardAxe*/
 	rightAxe = glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), forwardAxe));

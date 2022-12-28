@@ -4,7 +4,6 @@
 #include <GLM/include/fwd.hpp>
 #include "Shader.h"
 #include "Texture.h"
-#include "UTILS/include/Constants.h"
 #include "UTILS/include/Movement.h"
 #include "UTILS/include/Mesh.h"
 class Terrain
@@ -16,12 +15,13 @@ public:
 	{
 		glm::vec3 Position;
 		glm::vec2 UVCoord;
+		glm::vec3 Normal;
 	};
 	Terrain(const std::vector<float>& heightMap);
 	void DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader& terrainShader,
 	                 Texture& grassTexture, Texture& snowTexture);
 	std::vector<TerrainVertex> GetTerrainVertices();
-
+	void RecomputeVertex(const std::vector<float>& heightMap);
 	
 private:
 	void SetupTerrain(const std::vector<float>& heightMap);

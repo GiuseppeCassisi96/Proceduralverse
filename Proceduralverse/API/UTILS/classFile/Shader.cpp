@@ -1,6 +1,10 @@
 #include "UTILS/include/Shader.h"
 
 #include "UTILS/include/Constants.h"
+#include "UTILS/include/Mesh.h"
+#include "UTILS/include/Mesh.h"
+#include "UTILS/include/Mesh.h"
+#include "UTILS/include/Mesh.h"
 
 
 Shader::Shader(const char* vertexShaderPath, const char* fragmentShaderPath)
@@ -83,42 +87,49 @@ void Shader::DeleteShaders()
 	glDeleteShader(fragmentObj);
 }
 
-void Shader::DeleteProgram()
+void Shader::DeleteProgram() const
 {
 	glDeleteProgram(program);
 }
 
 
-void Shader::UseProgram()
+void Shader::UseProgram() const
 {
 	glUseProgram(program);
 }
 
-void Shader::SetUniformMatrix4(const char* uniformParamName, glm::mat4& value)
+void Shader::SetUniformMatrix4(const char* uniformParamName, const glm::mat4& value) const
 {
-	const unsigned int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
+	const int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
 	glUniformMatrix4fv(uniformParamLoc, 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void Shader::SetUniformMatrix3(const char* uniformParamName, glm::mat3& value)
+void Shader::SetUniformMatrix3(const char* uniformParamName, const glm::mat3& value) const
 {
-	const unsigned int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
+	const int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
 	glUniformMatrix3fv(uniformParamLoc, 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void Shader::SetUniformFloat(const char* uniformParamName, float value)
+void Shader::SetUniformFloat(const char* uniformParamName, float value) const
 {
-	const unsigned int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
+	const int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
 	glUniform1f(uniformParamLoc, value);
 }
 
-void Shader::SetUniformInt(const char* uniformParamName, int value)
+void Shader::SetUniformInt(const char* uniformParamName, int value) const
 {
-	const unsigned int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
+	const int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
 	glUniform1i(uniformParamLoc, value);
 }
 
-void Shader::SetSubroutine(const char* functionName, GLenum shaderType)
+
+void Shader::SetUniformVec3(const char* uniformParamName, const glm::vec3& value) const
+{
+	const int uniformParamLoc = glGetUniformLocation(program, uniformParamName);
+	glUniform3fv(uniformParamLoc, 1, glm::value_ptr(value));
+}
+
+void Shader::SetSubroutine(const char* functionName, GLenum shaderType) const
 {
 	const unsigned int subroutineIndex = glGetSubroutineIndex(program, shaderType, functionName);
 	glUniformSubroutinesuiv(shaderType, 1, &subroutineIndex);

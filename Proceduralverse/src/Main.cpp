@@ -9,17 +9,33 @@
 #include "UTILS/include/Tree.h"
 
 
+glm::vec3 sunPos{ 350.0f * XDIM, 200.0f, 350 * ZDIM };
+glm::vec3 diffusiveColor{ 0.0f, 1.0f, 0.0f };
+glm::vec3 specularColor{ 1.0f, 1.0f, 1.0f };
+glm::vec3 ambientColor{ 0.1f, 0.1f, 0.1f };
+//Light constants
+float kd = 0.5f;
+float ks = 0.4f;
+float ka = 0.1f;
+float alphaPhong = 25.0f;
+//For GGX
+float roughnessIndex = 0.2f;
+float f0 = 0.9f;
+
 glm::mat4 cameraView{ 1.0f };
 glm::mat4 proj = glm::perspective(45.0f, WIDTH / HEIGHT, 0.1f, 1000000.0f);
-Movement cameraMove{ glm::vec3(0.0f,0.0f,7.0f),cameraView };
+Movement cameraMove{ glm::vec3(250.0f,0.0f,500.0f),cameraView };
+
+constexpr int HeightMapsSize = MESH_RESOLUTION * MESH_RESOLUTION;
+std::vector<float>ElevationMap(HeightMapsSize);
+std::vector<float> BiomeMap(HeightMapsSize);
+
 //Terrain generator parameters
 float frequency = 1.3f;
 int octaves = 10;
 float amplitude = 1.9f;
 float seed = 0.7f;
-constexpr int HeightMapsSize = MESH_RESOLUTION * MESH_RESOLUTION;
-std::vector<float>ElevationMap (HeightMapsSize);
-std::vector<float> BiomeMap(HeightMapsSize);
+
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
     cameraMove.Rotate(xpos, ypos);
@@ -90,13 +106,20 @@ int main(void)
     ProceduralVerseShader.UseProgram();
     ProceduralVerseShader.SetUniformMatrix4("proj", proj);
     ProceduralVerseShader.SetUniformFloat("heightScale", HEIGHT_SCALE);
-    ProceduralVerseShader.SetUniformInt("heightMap", 0);
-    ProceduralVerseShader.SetUniformInt("Map", 0);
     ProceduralVerseShader.SetUniformInt("grass", 1);
     ProceduralVerseShader.SetUniformInt("snow", 2);
     ProceduralVerseShader.SetUniformInt("rock", 3);
     ProceduralVerseShader.SetUniformInt("sand", 4);
     ProceduralVerseShader.SetUniformInt("numberOfTile", NUMBER_OF_TILE);
+    ProceduralVerseShader.SetUniformVec3("sunPos", sunPos);
+    ProceduralVerseShader.SetUniformVec3("diffusiveColor", diffusiveColor);
+    ProceduralVerseShader.SetUniformVec3("specularColor", specularColor);
+    ProceduralVerseShader.SetUniformVec3("ambientColor", ambientColor);
+    ProceduralVerseShader.SetUniformFloat("kd", kd);
+    ProceduralVerseShader.SetUniformFloat("ks", ks);
+    ProceduralVerseShader.SetUniformFloat("ka", ka);
+    ProceduralVerseShader.SetUniformFloat("alphaPhong", alphaPhong);
+
     Terrain terrain{ ElevationMap };
     Tree treePositionManager{NUMBER_OF_TREE, treePositions,BiomeMap, terrain };
     Model tree{ "src/Assets/Models/tree_obj.obj", treePositions};

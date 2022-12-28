@@ -1,13 +1,10 @@
 #pragma once
 #define GLEW_STATIC
 #include <GLM/include/glm.hpp>
-#include <GLM/include/gtc/matrix_transform.hpp>
-#include <GLM/include/gtc/type_ptr.hpp>
 #include <vector>
 #include <GLEW/Include/GL/glew.h>
 #include <GLM/include/fwd.hpp>
 #include "UTILS/include/Constants.h"
-#include "UTILS/include/ErrorCheck.h"
 
 struct Vertex
 {

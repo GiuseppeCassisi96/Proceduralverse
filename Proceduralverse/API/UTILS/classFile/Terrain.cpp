@@ -33,7 +33,7 @@ void Terrain::SetupTerrain(const std::vector<float>& heightMap)
                 NUMBER_OF_TILE * fi / fMeshResolution, //U
                 NUMBER_OF_TILE * fj / fMeshResolution  //V
             );
-            vertices.push_back(tempVertex);
+            vertices.emplace_back(tempVertex);
         }
     }
 
@@ -53,11 +53,15 @@ void Terrain::SetupTerrain(const std::vector<float>& heightMap)
             indices.emplace_back(j + 1 + rowOffset);
             indices.emplace_back(j + rowOffset + MESH_RESOLUTION + 1);
             indices.emplace_back(j + rowOffset + MESH_RESOLUTION);
+
+            //Normal computation
+            glm::vec3 firstEdge = vertices[j + 1 + rowOffset].Position - vertices[j + rowOffset].Position;
+            glm::vec3 secondEdge = vertices[j + rowOffset + MESH_RESOLUTION].Position - vertices[j + rowOffset].Position;
+            vertices[j + rowOffset].Normal = cross(firstEdge, secondEdge);
             
 	    }
         rowOffset += MESH_RESOLUTION;
     }
-
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -77,6 +81,9 @@ void Terrain::SetupTerrain(const std::vector<float>& heightMap)
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(TerrainVertex), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(TerrainVertex), (void*)(5 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
     glBindVertexArray(0);
 
 }
@@ -91,6 +98,9 @@ void Terrain::DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader
     terrainModel = glm::rotate(terrainModel, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     terrainModel = glm::scale(terrainModel, glm::vec3(XDIM, 1.0f, ZDIM));
 
+    glm::mat3 terrainNormal = glm::mat3{ 1.0f };
+    terrainNormal = inverseTranspose(cameraView * terrainModel);
+
     terrainShader.UseProgram();
     terrainShader.SetSubroutine("TerrainGeneration", GL_VERTEX_SHADER);
     terrainShader.SetSubroutine("TerrainFrag", GL_FRAGMENT_SHADER);
@@ -98,6 +108,7 @@ void Terrain::DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader
     terrainShader.SetUniformMatrix4("view", cameraView);
     terrainShader.SetUniformInt("grass", 1);
     terrainShader.SetUniformInt("snow", 2);
+    terrainShader.SetUniformMatrix3("NormalMatrix", terrainNormal);
     grassTexture.BindTexture(GL_TEXTURE1);
     snowTexture.BindTexture(GL_TEXTURE2);
 
@@ -109,6 +120,45 @@ void Terrain::DrawTerrain(glm::mat4& terrainModel, glm::mat4& cameraView, Shader
 std::vector<Terrain::TerrainVertex> Terrain::GetTerrainVertices()
 {
     return  vertices;
+}
+
+void Terrain::RecomputeVertex(const std::vector<float>& heightMap)
+{
+    vertices.clear();
+    for (int i = 0; i < MESH_RESOLUTION; i++)
+    {
+        for (int j = 0; j < MESH_RESOLUTION; j++)
+        {
+            const auto fi = static_cast<float>(i);
+            const auto fj = static_cast<float>(j);
+            constexpr auto fMeshResolution = static_cast<float>(MESH_RESOLUTION);
+            TerrainVertex tempVertex{};
+            tempVertex.Position = glm::vec3
+            (
+                i
+                , heightMap[i + j * MESH_RESOLUTION] //Y
+                , j
+            );
+            tempVertex.UVCoord = glm::vec2
+            (
+                NUMBER_OF_TILE * fi / fMeshResolution, //U
+                NUMBER_OF_TILE * fj / fMeshResolution  //V
+            );
+            vertices.emplace_back(tempVertex);
+        }
+    }
+    int rowOffset = 0;
+    for (int i = 0; i < MESH_RESOLUTION - 1; i++)
+    {
+        for (int j = 0; j < MESH_RESOLUTION - 1; j++)
+        {
+            //Normal computation
+            glm::vec3 firstEdge = vertices[j + 1 + rowOffset].Position - vertices[j + rowOffset].Position;
+            glm::vec3 secondEdge = vertices[j + rowOffset + MESH_RESOLUTION].Position - vertices[j + rowOffset].Position;
+            vertices[j + rowOffset].Normal = glm::cross(firstEdge, secondEdge);
+        }
+        rowOffset += MESH_RESOLUTION;
+    }
 }
 
 
